@@ -1,0 +1,44 @@
+struct BRIDGE{
+    vector<bool> vis;
+    ll size;
+    vector<ll> dp;
+    vector<ll> sub_size;
+    vector<ll> cnt_up;
+    vector<ll> cnt_down;
+    vector<vector<ll>> g;
+    set<pair<ll,ll>> back,span,bridges;
+    void init(ll n){
+      size=n;
+      vis.assign(n+5,0);
+      dp.assign(n+5,0);
+      cnt_up.resize(n+5);
+      cnt_down.resize(n+5);
+      sub_size.assign(n+5,1LL);
+    }
+    void dfs(ll u){
+      vis[u]=true;
+      for(auto v : g[u]){
+        if(!vis[v]) {
+          span.insert({u,v});
+          span.insert({v,u});
+          dfs(v);
+          sub_size[u]+=sub_size[v];
+          dp[u]+=dp[v];
+          if(dp[v]==0){
+            bridges.insert({u,v});
+          }
+        }
+        else{
+          if(back.find({u,v})==back.end()&&span.find({u,v})==span.end()){ 
+            cnt_up[u]++;
+            cnt_down[v]++;
+            back.insert({u,v});
+            back.insert({v,u});
+          }
+        }
+      }
+      dp[u]+=cnt_up[u];
+      dp[u]-=cnt_down[u];
+    }
+    
+  };
