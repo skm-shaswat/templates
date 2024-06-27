@@ -1,0 +1,8 @@
+void ipgraph(ll m){
+  	ll u, v;
+	  while(m--){
+	    cin>>u>>v; 
+	    g[u].pb(v);
+	    g[v].pb(u);
+	  }
+	}
