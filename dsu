@@ -1,0 +1,34 @@
+struct DSU{ 
+  vl p;
+  vl r;
+  void init(ll n){
+    p.resize(n);
+    r.assign(n,1LL);
+    for(ll i=0;i<n;i++){
+      p[i]=i;
+    }
+  }
+  ll get(ll a){
+    return p[a] = ( p[a]==a ? a : get(p[a]) );
+  }
+
+  bool unite(ll a,ll b){
+    a=get(a);
+    b=get(b);
+    if(a==b) { return false; }
+
+    if(r[a]==r[b]) r[a]++;
+    
+    if(r[a]>r[b]){
+       p[b]=a;
+    }
+    else {
+       p[a]=b;
+    }
+    return true;
+  }
+  
+  bool connected(ll x,ll y){ 
+    return get(x)==get(y); 
+  }
+};
