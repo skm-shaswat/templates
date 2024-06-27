@@ -1,0 +1,5 @@
+ll bexp(ll base,ll power){
+	if(power==0) return 1;
+	if(power%2==0) return bexp(base*base,power/2);
+	return base*bexp(base,power-1);
+}
